@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header'); %>
+
+    <body>
+        <div class="col d-flex justify-content-center">
+            <!-- Article -->
+            <div class="card" style="width: 50rem;">
+                <div class="bg-light card-body">
+                    <div style="float:left">
+                        <a type="button" class="btn btn-outline-success" href="./home">
+                            <i class="fas fa-chevron-left"></i> Back
+                        </a>
+                    </div>
+                    <div style="float:right">
+                        <form method="post" action="add-likes">
+                            <input style="display: none;" id="article_id" name="article_id"
+                                value="<%= article.article_id %>" />
+                            <button type="submit" class="btn btn-outline-danger"><i class="fa-regular fa-thumbs-up"></i>
+                                <%= article.article_likes %>
+                            </button>
+                        </form>
+                    </div>
+                    <h5 class="card-title text-center">
+                        <%= article.article_title %>
+                    </h5>
+                    <h6 class="card-title text-center">
+                        <%= article.article_subtitle %>
+                            <br />
+                            <span class="text-muted text-center" style="font-size: 10px;">Created on : <%=
+                                    article.article_create_date %></span>
+
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <%- article.article_text %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="text-muted" style="font-size: x-small;">
+                            Publicate on : <%= article.article_publication_date %> ｜
+                                Last Modified : <%= article.article_last_modified_date %>
+                        </div>
+                    </li>
+                </ul>
+                <!-- Comment Form -->
+                <div class="bg-light p-2">
+                    <form method="post" action="create-comments">
+                        <div class="mb-2">
+                            <input style="display: none;" id="article_id" name="article_id"
+                                value="<%= article.article_id %>" />
+                            <label for="comment_text" class="form-label mb-2 p-2">Comment Text:</label>
+                            <textarea id="tiny" class="form-control" id="comment_text" name="comment_text" rows="3"
+                                placeholder="Share your comments here..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <br />
+
+        <!-- Comments-->
+        <div class="col d-flex justify-content-center">
+            <div>
+                <div class="text-center" style="text-decoration: underline; font-size:x-large">Latest Comments</div>
+                <hr />
+                <% if (comments.length > 0) { %>
+                    <div class="row row-cols-1 row-cols-md-3 g-2 box-container">
+                        <% comments.forEach(function(comment){ %>
+                            <div class="col ">
+                                <div class="card box">
+                                    <div class="card-title"><span class="p-2" style="float: right;">
+                                        <a href="./comments/remove?article_id=<%= article.article_id %>&comment_id=<%= comment.comment_id %>" data-bs-toggle="tooltip"
+                                            onclick="return confirmAction('<%= comment.comment_content %>', 'remove', 'comment')"
+                                            data-bs-placement="top" title="Remove Comments"
+                                            class="link-danger float-end"><i class="fa-solid fa-trash"></i></a>
+                                        </span></div>
+                                    <div class="card-body">
+                                        <p class="card-text box-text" id="tiny">
+                                            <%- comment.comment_content %>
+                                        </p>
+                                        <div class="text-muted" style="font-size: x-small;">
+                                            Posted on: <%= comment.comment_create_date %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                <%} else { %>
+                    <div class="text-center text-muted no-content">No Comments Provided</div>
+                <% } %>
+            </div>
+        </div>
+        <%- include('footer'); %>
+    </body>
+
+</html>

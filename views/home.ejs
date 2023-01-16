@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header'); %>
+
+    <body>
+        <% if (user.type=="Reader" ) { %>
+            <!-- Reader - Published Articles-->
+            <div class="col d-flex justify-content-center">
+                <div class="row" style="width:50em">
+                    <div class="text-center" style="text-decoration: underline; font-size:x-large">Articles
+                    </div>
+                    <hr />
+                </div>
+            </div>
+            <div class="col d-flex justify-content-center">
+                <% if (articles.length> 0) { %>
+                    <div class="row mb-2 box-container">
+                        <% articles.forEach(function(article){ %>
+                            <div class="col-md-4">
+                                <div
+                                    class="row box g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                    <div class="col p-4 d-flex flex-column position-static">
+                                        <strong class="d-inline-block mb-2 text-success box-text">
+                                            <%= article.article_subtitle %>
+                                                <div class="mb-1 text-muted" style="font-size: 10px;">
+                                                    <span class="badge rounded-pill bg-success">Published on:</span>
+                                                    <%= article.article_publication_date %>
+                                                </div>
+                                        </strong>
+                                        <h4 class="mb-0 box-text">
+                                            <%= article.article_title %>
+                                        </h4>
+                                        <a href="./article?id=<%= article.article_id %>"
+                                            class="stretched-link link-secondary">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <%} else { %>
+                        <div class="text-center text-muted no-content">No
+                            Articles Provided</div>
+                        <% } %>
+            </div>
+            <%} else { %>
+                <!-- Author - Draft Articles-->
+                <div class="col d-flex justify-content-center">
+                    <div class="row" style="width:50em">
+                        <div class="text-center" style="text-decoration: underline; font-size:x-large">Draft Articles
+                        </div>
+                        <div class="float-right p-2">
+                            <a href="./edit %>" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Article"
+                                role="button" class="btn btn-outline-primary float-end px-2"><i
+                                    class="fa-solid fa-plus"></i> Create New Draft </a>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <% if (draft_articles.length> 0) { %>
+                        <div class="row mb-2 box-container">
+                            <% draft_articles.forEach(function(article){ %>
+                                <div class="col-md-4">
+                                    <div
+                                        class="row box g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                        <div class="col p-4 d-flex flex-column position-static ">
+                                            <h6 class="mb-0 box-text">
+                                                <%= article.article_subtitle %>
+                                            </h6>
+                                            <h4 class="mb-0 box-text text-success">
+                                                <strong>
+                                                    <%= article.article_title %>
+                                                </strong>
+                                            </h4>
+                                            <strong class="d-inline-block mb-2 box-text">
+                                                <div class="mb-1 text-muted" style="font-size: 12px;">
+                                                    <span class="badge rounded-pill bg-primary">Created on:</span>
+                                                    <%= article.article_create_date %>
+                                                </div>
+                                                <div class="mb-1 text-muted" style="font-size: 12px;">
+                                                    <span class="badge rounded-pill bg-secondary">Last Modified
+                                                        on:</span>
+                                                    <%= article.article_last_modified_date %>
+                                                </div>
+                                            </strong>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <a href="./edit?id=<%= article.article_id %>" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Edit Article" class=link-secondary
+                                                    float-start px-2"><i class="fas fa-edit"></i></a>
+                                                <a href="./publish?id=<%= article.article_id %>"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Publish Article"
+                                                    onclick="return confirmAction('<%= article.article_title %>', 'publish', 'article')"
+                                                    class="link-success"><i class="fas fa-upload"></i></a>
+                                                <a href="./remove?id=<%= article.article_id %>"
+                                                    onclick="return confirmAction('<%= article.article_title %>', 'remove', 'article')"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Remove Article" class="link-danger float-end"><i
+                                                        class="fa-solid fa-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                        <%} else { %>
+                            <div class="text-center text-muted no-content">
+                                No Draft Articles Provided</div>
+                            <% } %>
+                </div>
+                <br /><br />
+                <!-- Author - Published articles-->
+                <div class="col d-flex justify-content-center">
+                    <div class="row" style="width:50em">
+                        <div class="text-center" style="text-decoration: underline; font-size:x-large">Published
+                            Articles
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <% if (published_articles.length> 0) { %>
+
+                        <div class="row mb-2 box-container">
+                            <% published_articles.forEach(function(article){ %>
+                                <div class="col-md-4">
+                                    <div
+                                        class="row box g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                        <div class="col p-4 d-flex flex-column position-static">
+                                            <h6 class="mb-0 box-text">
+                                                <%= article.article_subtitle %>
+                                            </h6>
+                                            <h4 class="mb-0 box-text text-success">
+                                                <strong>
+                                                    <%= article.article_title %>
+                                                </strong>
+                                            </h4>
+                                            <p class="d-inline-block mb-2 box-text">
+                                            <div class="mb-1 text-muted" style="font-size: 12px;">
+                                                <span class="badge rounded-pill bg-danger">Likes:</span>
+                                                <%= article.article_likes %> <i class="fa-regular fa-thumbs-up"></i>
+                                            </div>
+                                            <div class="mb-1 text-muted" style="font-size: 12px;">
+                                                <span class="badge rounded-pill bg-primary">Created on:</span>
+                                                <%= article.article_create_date %>
+                                            </div>
+                                            <div class="mb-1 text-muted" style="font-size: 12px;">
+                                                <span class="badge rounded-pill bg-secondary">Last Modified on:</span>
+                                                <%= article.article_last_modified_date %>
+                                            </div>
+                                            <div class="mb-1 text-muted" style="font-size: 12px;">
+                                                <span class="badge rounded-pill bg-success">Published on:</span>
+                                                <%= article.article_publication_date %>
+                                            </div>
+                                            </p>
+                                            <a href="/reader/article?id=<%= article.article_id %>"
+                                                class="link-secondary">Read More</a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <a href="./edit?id=<%= article.article_id %>" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Edit Article"
+                                                    class=" link-secondary float-start px-2"><i
+                                                        class="fas fa-edit"></i></a>
+                                                <a href="javascript: copyToClipboard('<%= article.article_id %>')"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Share Article" class="link-primary"><i
+                                                        class="fa-solid fa-share-from-square"></i></a>
+                                                <a href="./remove?id=<%= article.article_id %>" data-bs-toggle="tooltip"
+                                                    onclick="return confirmAction('<%= article.article_title %>', 'remove', 'article')"
+                                                    data-bs-placement="top" title="Remove Article"
+                                                    class="link-danger float-end"><i class="fa-solid fa-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                        <%} else { %>
+                            <div class="text-center text-muted no-content">
+                                No Publishd Article Provided </div>
+                            <% } %>
+                </div>
+                <% } %>
+
+                    <%- include('footer'); %>
+    </body>
+
+</html>

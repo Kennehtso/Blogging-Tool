@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header'); %>
+
+    <body>
+        <div class="col d-flex justify-content-center">
+            <!-- Comment Form -->
+            <div class="p-2 edit-form">
+                <div class="card">
+                    <div class="bg-light card-body">
+                        <div style="float:left">
+                            <a type="button" class="btn btn-outline-success" href="./home">
+                                <i class="fas fa-chevron-left"></i> Back
+                            </a>
+                        </div>
+                        <div style="float:right">
+                            <label for="article_state">Articile State : </label>
+                            <span class="badge rounded-pill bg-primary"><%- article.article_state===0 ? 'Draft'
+                                    : 'Published' %></span>
+                        </div>
+                    </div>
+                </div>
+                <form method="post" action="create-or-update" class="needs-validation">
+                    <input style="display: none;" id="article_id" name="article_id" value="<%= article.article_id %>" />
+                    <div class="mb-3 row">
+                        <label for="article_publication_date" class="col-sm-3 col-form-label">Publicate on:</label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly class="form-control-plaintext" id="article_publication_date"
+                                name="article_publication_date" value="<%- article.article_state===0 ? 'Not Published'
+                                : article.article_publication_date %>">
+                        </div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="article_last_modified_date" class="col-sm-3 col-form-label">Last Modified on:</label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly class="form-control-plaintext" id="article_last_modified_date"
+                                name="article_last_modified_date" value="<%= article.article_last_modified_date %>">
+                        </div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="article_create_date" class="col-sm-3 col-form-label ">Created on:</label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly class="form-control-plaintext" id="article_create_date"
+                                name="article_create_date" value="<%= article.article_create_date %>">
+                        </div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="article_title" class="form-label">Title:</label>
+                        <input class="form-control" maxlength="50" type="text" id="article_title" name="article_title"
+                            value="<%= article.article_title %>" placeholder="eg: Peace and Love" required/>
+                            <div class="valid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="article_subtitle" class="form-label">Sub Title</label>
+                        <input class="form-control" maxlength="50" type="text" id="article_subtitle"
+                            name="article_subtitle" value="<%= article.article_subtitle %>"
+                            placeholder="eg: This is a new journey with.." required/>
+                            <div class="valid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="article_text" class="form-label">Text Content:</label>
+                        <textarea id="tiny" class="form-control" type="text" id="article_text" name="article_text" rows="5"
+                            placeholder="eg: Write ariticle here here."><%= article.article_text %></textarea>
+                            <div class="valid-feedback"></div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+        <%- include('footer'); %>
+    </body>
+
+</html>

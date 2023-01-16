@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header'); %>
+
+    <body>
+        <div class="col d-flex justify-content-center">
+            <!-- Comment Form -->
+            <div class="p-2 edit-form">
+                <div class="card">
+                    <div class="bg-light card-body">
+                        <div style="float:left">
+                            <a type="button" class="btn btn-outline-success" href="./home">
+                                <i class="fas fa-chevron-left"></i> Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <form method="post" action="update-settings" class="needs-validation">
+                    <div class="mb-3">
+                        <label for="author_name" class="form-label">Author Name:</label>
+                        <input class="form-control" maxlength="50" type="text" id="author_name" name="author_name"
+                            value="<%= user.name %>" placeholder="eg: John Wick" required />
+                        <div id="author_name_help" class="form-text helper-text p-1">(0 - 50 words)</div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="blog_title" class="form-label">Blog Title:</label>
+                        <textarea class="form-control" maxlength="100" type="text" id="blog_title" name="blog_title"
+                            placeholder="eg: Welcome to this Blog." required><%= user.blogTitle %> </textarea>
+                        <div id="blog_title_help" class="form-text helper-text p-1">(0 - 100 words)</div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                    <div class="mb-3 ">
+                        <label for="blog_subtile" class="form-label">Blog Subtitle:</label>
+                        <textarea class="form-control" maxlength="100" type="text" id="blog_subtile" name="blog_subtile"
+                            placeholder="eg: Please join me here, share your thoughts with me."
+                            required><%= user.subTitle %></textarea>
+                        <div id="blog_subtile_help" class="form-text helper-text p-1">(0 - 100 words)</div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
+                </form>
+            </div>
+        </div>
+        <%- include('footer'); %>
+    </body>
+
+</html>
